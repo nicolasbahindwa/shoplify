@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module Shoplify
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.1
+    #config.load_defaults 6.1
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -18,7 +18,7 @@ module Shoplify
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
-    #Rails.application.config.hosts << "504d-1-66-100-39.ngrok.io"
+    Rails.application.config.hosts << "989f-1-66-100-39.ngrok.io"
     config.assets.initialize_on_precompile = false
   end
 end

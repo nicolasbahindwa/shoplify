@@ -21,11 +21,11 @@ class CheckoutController < ApplicationController
         cancel_url: root_url,
         payment_method_types: ['card'],
         line_items: [
-            {currency: "usd", name: product.name, amount: product.price, quantity: 2},
+            {currency: "usd", name: product.name, amount: product.price, quantity: 1},
         ],
         mode: 'payment',
         })
-        byebug
+        # byebug
         respond_to do |format|
             format.js
         end
