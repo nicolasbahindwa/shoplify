@@ -17,8 +17,8 @@ class CheckoutController < ApplicationController
         #     cancel_url: root_path,
         # })
         @session = Stripe::Checkout::Session.create({
-        success_url: 'http://127.0.0.1:3000/',
-        cancel_url: 'http://127.0.0.1:3000/',
+        success_url: root_url,
+        cancel_url: root_url,
         payment_method_types: ['card'],
         line_items: [
             {currency: "usd", name: product.name, amount: product.price, quantity: 2},
