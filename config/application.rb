@@ -19,5 +19,6 @@ module Shoplify
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
     #Rails.application.config.hosts << "504d-1-66-100-39.ngrok.io"
+    config.assets.initialize_on_precompile = false
   end
 end
