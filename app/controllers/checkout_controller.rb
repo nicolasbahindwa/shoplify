@@ -1,4 +1,6 @@
 class CheckoutController < ApplicationController
+    #skip_before_action :authenticate_user!
+    # skip_before_action :verify_authenticity_token
 
     def create
         product = Product.find(params[:id])
@@ -6,7 +8,7 @@ class CheckoutController < ApplicationController
         # Stripe.api_key = Rails.application.credentials[:stripe][:secret]
     
         @session = Stripe::Checkout::Session.create({
-        success_url: root_url,
+        success_url: root_url + "?session_id={CHECKOUT_SESSION_ID}",
         cancel_url: root_url,
         customer: current_user.stripe_customer_id,
         payment_method_types: ['card'],

@@ -1,5 +1,5 @@
 class WebhooksController < ApplicationController
-    #skip_before_action :authenticate_user!
+    skip_before_action :authenticate_user!
     #skip_before_action :verify_authenticity_token
 
   def create
@@ -26,7 +26,7 @@ class WebhooksController < ApplicationController
     when 'checkout.session.completed'
         
         session = event.data.object
-        byebug
+        # byebug
         # session_with_expand = Stripe::Checkout::Session.retrieve({ id: session.id, expand: ["line_items"]})
         # session_with_expand.line_items.data.each do |line_item|
         @product = Product.find_by(price: session.amount_total)
