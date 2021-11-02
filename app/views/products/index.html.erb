@@ -6,6 +6,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Currency</th>
       <th>Price</th>
       <th>Stripe product id</th>
       <th>Stripe price id</th>
@@ -20,7 +21,9 @@
     <% @products.each do |product| %>
       <tr>
         <td><%= product.name %></td>
-        <td><%= number_to_currency(product.price) %></td>
+        <td><%= product.currency %></td>
+        <%# <td><%= number_to_currency(product.price) %>
+        <td><%= product.price %></td>
         <td><%= product.stripe_product_id %></td>
         <td><%= product.stripe_price_id %></td>
         <%# button_to 'buy now', checkout_create_path, params: {id: product.id}, remote: true, data: { disable_with: "processing..."} %>

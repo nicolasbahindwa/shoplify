@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_01_095344) do
+ActiveRecord::Schema.define(version: 2021_11_02_032038) do
 
   create_table "products", force: :cascade do |t|
     t.string "name"
@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 2021_11_01_095344) do
     t.integer "sales_count", default: 0, null: false
     t.string "stripe_product_id"
     t.string "stripe_price_id"
+    t.string "currency", default: "usd"
   end
 
   create_table "users", force: :cascade do |t|
