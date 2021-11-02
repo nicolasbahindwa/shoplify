@@ -26,6 +26,9 @@ gem 'stripe'
 
 gem 'devise'
 
+gem 'money-rails', '~>1.12'
+
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 
