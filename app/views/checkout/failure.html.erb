@@ -1,0 +1,29 @@
+<% if params[:session_id].present? %>
+  <% @status =  Stripe::Checkout::Session.retrieve(params[:session_id]).payment_status %>
+  <% @session =  Stripe::Checkout::Session.retrieve(params[:session_id]) %>
+
+  <%= @session %>
+  <hr>
+  <%= @status %>
+  <br>
+  <%= @session.payment_intent %>
+  <hr>
+  <%= Stripe::PaymentIntent.retrieve(@session.payment_intent)%>
+  <hr>
+  <% @session_with_expand = Stripe::Checkout::Session.retrieve({
+    id: params[:session_id],
+    expand: ["payment_intent", "line_items"]
+  })%>
+
+  <%= @session_with_expand.line_items %>
+
+  <hr>
+
+  <% @session_with_expand.line_items.data.each do |line_item| %>
+    <p><%= line_item.id %></p>
+    <p><%= line_item.amount_subtotal %></p>
+    <p><%= line_item.price %></p>
+    <p><%= line_item.price.product %></p>
+  <% end %>
+
+<% end %>

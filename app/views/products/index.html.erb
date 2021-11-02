@@ -22,7 +22,7 @@
         <td><%= number_to_currency(product.price) %></td>
         <td><%= product.stripe_product_id %></td>
         <td><%= product.stripe_price_id %></td>
-        <td><%= button_to 'buy now', checkout_create_path, params: {id: product.id}, remote: true %></td>
+        <td><%= button_to 'buy now', checkout_create_path, params: {id: product.id}, remote: true, data: { disable_with: "processing..."} %></td>
         <td><%= product.sales_count %></td>
         <td><%= link_to 'Show', product %></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
@@ -38,32 +38,4 @@
 <%= link_to 'New Product', new_product_path %>
 <hr>
 
-<% if params[:session_id].present? %>
-  <% @status =  Stripe::Checkout::Session.retrieve(params[:session_id]).payment_status %>
-  <% @session =  Stripe::Checkout::Session.retrieve(params[:session_id]) %>
-
-  <%= @session %>
-  <hr>
-  <%= @status %>
-  <br>
-  <%= @session.payment_intent %>
-  <hr>
-  <%= Stripe::PaymentIntent.retrieve(@session.payment_intent)%>
-  <hr>
-  <% @session_with_expand = Stripe::Checkout::Session.retrieve({
-    id: params[:session_id],
-    expand: ["payment_intent", "line_items"]
-  })%>
-
-  <%= @session_with_expand.line_items %>
-
-  <hr>
-
-  <% @session_with_expand.line_items.data.each do |line_item| %>
-    <p><%= line_item.id %></p>
-    <p><%= line_item.amount_subtotal %></p>
-    <p><%= line_item.price %></p>
-    <p><%= line_item.price.product %></p>
-  <% end %>
-
-<% end %>
+ 
