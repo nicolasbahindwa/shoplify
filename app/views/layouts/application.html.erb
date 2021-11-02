@@ -27,6 +27,11 @@
     <hr>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <h3>Shopping card</h3>
+    <% @cart.each do |name| %>
+    item: ==> <%= name %><br>
+    <% end %>
+    <hr>
     <%= yield %>
   </body>
 </html>
