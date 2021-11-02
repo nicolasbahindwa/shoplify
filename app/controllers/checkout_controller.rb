@@ -3,8 +3,8 @@ class CheckoutController < ApplicationController
     # skip_before_action :verify_authenticity_token
 
     def create
-        product = Product.find(params[:id])
-        puts product.name
+        # product = Product.find(params[:id])
+        # puts product.name
         # Stripe.api_key = Rails.application.credentials[:stripe][:secret]
     
         @session = Stripe::Checkout::Session.create({
@@ -12,13 +12,14 @@ class CheckoutController < ApplicationController
         cancel_url: cancel_url,
         customer: current_user.stripe_customer_id,
         payment_method_types: ['card'],
-        line_items: [{
-            # currency: "usd",
-            # name: product.name,
-            # amount: product.price,
-            price: product.stripe_price_id,
-            quantity: 1
-        }],
+        line_items: @cart.collect {|item| item.to_builder.attributes! },
+        # [{
+        #     # currency: "usd",
+        #     # name: product.name,
+        #     # amount: product.price,
+        #     price: product.stripe_price_id,
+        #     quantity: 1
+        # }],
         mode: 'payment',
         })
         # byebug
@@ -30,11 +31,18 @@ class CheckoutController < ApplicationController
 
 
     def success
-        @session_with_expand = Stripe::Checkout::Session.retrieve({id: params[:session_id], expand: ["line_items"]})
+        if params[:session_id].present?
+            #session.delete(:cart)
+            session[:cart] = []# this line empty the shoping card (sassion based shopping cart)
+            @session_with_expand = Stripe::Checkout::Session.retrieve({id: params[:session_id], expand: ["line_items"]})
+            @session_with_expand.line_items.data.each do |line_item|
+                product = Product.find_by(stripe_product_id: line_item.price.product)
+                # product.increment!(:sales_count)
+            end 
 
-        @session_with_expand.line_items.data.each do |line_item|
-            product = Product.find_by(stripe_product_id: line_item.price.product)
-            # product.increment!(:sales_count)
+        else
+            redirect_to cancel_path, alert: "No infomation is avalailable"
+
         end 
         
     end

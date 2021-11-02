@@ -3,7 +3,7 @@
 
 Payment status : <%=  @session_with_expand.payment_status %>
 <br>
-Total cost : <%=  (@session_with_expand.amount_subtotal/100).to_f %>
+Total cost : <%=  @session_with_expand.amount_subtotal/100.to_f %>
                  <%=  @session_with_expand.currency %>
 
 <%# if params[:session_id].present? %>
@@ -35,3 +35,11 @@ Total cost : <%=  (@session_with_expand.amount_subtotal/100).to_f %>
   <%# end %>
 
 <%# end %>
+<h3> Transaction details </h3>
+
+<% @session_with_expand.line_items.data.each do |line_item| %>
+  <% product = Product.find_by(stripe_product_id: line_item.price.product) %>
+  <%= product.name %> <br>
+<% end %>
+
+<h3> Thanks for shopping with us </h3>
